@@ -8,7 +8,7 @@ var direction = '0';
 var visitedLocations = [[0, 0]];
 var hq = null;
 
-var input = fs.readFile(process.argv[2], function (err, data) {
+fs.readFile(process.argv[2], function (err, data) {
     var commands = ("" + data).split(', ');
 
     for (var i = 0; i < commands.length; i++) {
@@ -20,13 +20,13 @@ var input = fs.readFile(process.argv[2], function (err, data) {
         // console.log(`Command ${i}: Direction change: ${directionChange}, Distance: ${distance}`)
 
         updateDirection(directionChange);
-        addDistance(distance);
         addVisitedLocations(distance)
 
         // console.log(`new direction: ${direction}`)
     }
 
-    var distance = Math.abs(north) + Math.abs(east);
+    var finalLocation = visitedLocations[visitedLocations.length - 1];
+    var distance = Math.abs(finalLocation[0]) + Math.abs(finalLocation[1]);
     console.log(`Total distance: ${distance}`);
 
     var hqDistance = Math.abs(hq[0]) + Math.abs(hq[1]);
@@ -44,27 +44,6 @@ function updateDirection(change) {
         direction = 3;
     } else if (direction > 3) {
         direction = 0;
-    }
-}
-
-function addDistance(distance) {
-
-    switch (direction) {
-        case 0:
-            north += distance;
-            break;
-
-        case 1:
-            east += distance;
-            break;
-
-        case 2:
-            north -= distance;
-            break;
-
-        case 3:
-            east -= distance;
-            break;
     }
 }
 
