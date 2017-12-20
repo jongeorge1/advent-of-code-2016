@@ -1,15 +1,20 @@
 {
   "name": "advent-of-code-2016",
   "version": "1.0.0",
-  "description": "Advent of code, 2016",
-  "main": "app.js",
+  "description": "Advent of Code 2016",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "eslint": "^3.13.1",
     "md5": "^2.2.1",
-    "node-stopwatch": "0.0.1"
+    "jasmine": "^2.8.0",
+    "node-stopwatch": "0.0.1",
+    "string.prototype.padstart": "^3.0.0"
+  },
+  "devDependencies": {
   }
 }
