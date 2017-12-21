@@ -9,6 +9,14 @@ class Floor {
     }
   }
 
+  clone() {
+    let newFloor = new Floor(this.level);
+    newFloor.chips = this.chips.slice();
+    newFloor.generators = this.generators.slice();
+
+    return newFloor;
+  }
+
   parse(input) {
     if (input.indexOf('relevant.') !== -1) {
       return;
@@ -26,6 +34,22 @@ class Floor {
   addChips() {
     this.chips.push(...arguments);
     this.chips.sort();
+  }
+
+  removeChips() {
+    let a = Array.from(arguments);
+    a.map(el => {
+      let i = this.chips.indexOf(el);
+      if (i !== -1) this.chips.splice(i, 1);
+    });
+  }
+
+  removeGenerators() {
+    let a = Array.from(arguments);
+    a.map(el => {
+      let i = this.generators.indexOf(el);
+      if (i !== -1) this.generators.splice(i, 1);
+    });
   }
 
   addGenerators() {

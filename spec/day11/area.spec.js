@@ -99,4 +99,30 @@ describe('day 11 area module', () => {
       });
     });
   });
+
+  describe('when asked for possible moves', () => {
+    describe('and the elevator is on the ground floor', () => {
+      it('should return all the possible moves of one or two items up a level that result in a valid state for all floors', () => {
+        sut = new Area();
+        sut.floors.push(new Floor(1));
+        sut.floors.push(new Floor(2));
+        sut.floors.push(new Floor(3));
+
+        sut.floors[0].addGenerators('a', 'b', 'c');
+        sut.floors[0].addChips('a', 'c');
+
+        let result = sut.getPossibleMoves();
+
+        expect(result.length).toBe(3)
+      });
+    });
+
+    describe('and the elevator is on the top floor', () => {
+
+    });
+
+    describe('and the elevator is on a middle floor', () => {
+
+    });
+  });
 });
