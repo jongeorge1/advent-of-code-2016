@@ -5,13 +5,13 @@ module.exports = function (wallaby) {
     ],
 
     tests: [
-      'test/**/*[sS]pec.js'
+      'spec/**/*.spec.js'
     ],
 
-    testFramework: 'jasmine',
+    env: {
+      type: 'node'
+    },
 
-    delays: {
-      run: 500
-    }
+    testFramework: 'jasmine'
   };
 };
