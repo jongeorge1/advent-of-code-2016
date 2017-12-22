@@ -15,6 +15,5 @@
     "node-stopwatch": "0.0.1",
     "string.prototype.padstart": "^3.0.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
