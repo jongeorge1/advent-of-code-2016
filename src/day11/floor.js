@@ -21,9 +21,8 @@ class Floor {
     if (input.indexOf('relevant.') !== -1) {
       return;
     }
-    
+
     let components = input.split(',');
-    components;
     components.map(el => this.parseInputComponent(el));
   }
 
@@ -80,6 +79,60 @@ class Floor {
 
   serialize() {
     return `${this.level}|${this.generators.join(',')}|${this.chips.join(',')}`;
+  }
+
+  buildCombo(chips, generators) {
+    let combo = {
+      chips: chips || [],
+      generators: generators || []
+    };
+
+    combo.chips.sort();
+    combo.generators.sort();
+
+    combo.id = combo.chips.map(el => 'c' + el).join(',') + combo.generators.map(el => 'g' + el).join(',');
+    
+    return combo;
+  }
+
+  getAllMovableCombinations() {
+    let combos = [];
+
+    combos.push(...this.chips.map(el => this.buildCombo([el], [])));
+    combos.push(...this.generators.map(el => this.buildCombo([], [el])));
+
+    // Now all combinations of chips, and chips and generators
+    this.chips.map(el1 => {
+      this.chips.map(el2 => {
+        if (el1 !== el2) {
+          combos.push(this.buildCombo([el1, el2], []));
+        }
+      });
+
+      this.generators.map(el2 => {
+        combos.push(this.buildCombo([el1], [el2]));
+      });
+    });
+
+    // Now all combinations of generators
+    this.generators.map(el1 => {
+      this.generators.map(el2 => {
+        if (el1 !== el2) {
+          combos.push(this.buildCombo([], [el1, el2]));
+        }
+      });
+    });
+
+    // Finally, filter them down
+    let uniques = combos.reduce((acc, el, i) => {
+      if (!acc.find(x => x.id === el.id)) {
+        acc.push(el);
+      }
+
+      return acc;
+    }, []);
+
+    return uniques;
   }
 }
 

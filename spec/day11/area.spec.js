@@ -108,21 +108,47 @@ describe('day 11 area module', () => {
         sut.floors.push(new Floor(2));
         sut.floors.push(new Floor(3));
 
-        sut.floors[0].addGenerators('a', 'b', 'c');
-        sut.floors[0].addChips('a', 'c');
+        sut.floors[0].addGenerators('b', 'c');
+        sut.floors[0].addChips('c');
 
         let result = sut.getPossibleMoves();
 
-        expect(result.length).toBe(3)
+        expect(result.length).toBe(4);
       });
     });
 
     describe('and the elevator is on the top floor', () => {
+      it('should return all the possible moves of one or two items up a level that result in a valid state for all floors', () => {
+        sut = new Area();
+        sut.floors.push(new Floor(1));
+        sut.floors.push(new Floor(2));
+        sut.floors.push(new Floor(3));
+        sut.elevator = 2;
 
+        sut.floors[2].addGenerators('b', 'c');
+        sut.floors[2].addChips('c');
+
+        let result = sut.getPossibleMoves();
+
+        expect(result.length).toBe(4);
+      });
     });
 
     describe('and the elevator is on a middle floor', () => {
+      it('should return all the possible moves of one or two items up a level that result in a valid state for all floors', () => {
+        sut = new Area();
+        sut.floors.push(new Floor(1));
+        sut.floors.push(new Floor(2));
+        sut.floors.push(new Floor(3));
+        sut.elevator = 1;
 
+        sut.floors[1].addGenerators('b', 'c');
+        sut.floors[1].addChips('c');
+
+        let result = sut.getPossibleMoves();
+
+        expect(result.length).toBe(8);
+      });
     });
   });
 });

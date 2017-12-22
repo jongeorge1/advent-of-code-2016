@@ -30,6 +30,12 @@ class Area {
     return this.elevator + '~' + this.floors.map(el => el.serialize()).join('~');
   }
 
+  write() {
+    this.floors.map((el, i) => {
+      console.log(`F${el.level} ${(i === this.elevator) ? 'E' : '.' } ${ el.generators.map(x => 'G-' + x).join(' ')} ${ el.chips.map(x => 'C-' + x).join(' ')}`);
+    });
+  }
+
   getPossibleMoves() {
     let moves = [];
     
@@ -48,28 +54,27 @@ class Area {
     let currentFloorIndex = this.elevator;
     let targetFloorIndex = this.elevator + direction;
 
-    let currentFloorGenerators = this.floors[currentFloorIndex].generators;
-    let currentFloorChips = this.floors[currentFloorIndex].chips;
-
+    let movableItems = this.floors[currentFloorIndex].getAllMovableCombinations();
     let moves = [];
 
-    currentFloorGenerators.map(el => {
-      let newArea = this.clone();
-      newArea.floors[currentFloorIndex].removeGenerators(el);
-      newArea.floors[targetFloorIndex].addGenerators(el);
-      newArea.elevator = targetFloorIndex;
-      moves.push(newArea);
+    movableItems.map(el => {
+      let area = this.clone();
+      let currentFloor = area.floors[currentFloorIndex];
+      let targetFloor = area.floors[targetFloorIndex];
+      area.elevator = targetFloorIndex;
+
+      currentFloor.removeGenerators(...el.generators);
+      targetFloor.addGenerators(...el.generators);
+
+      currentFloor.removeChips(...el.chips);
+      targetFloor.addChips(...el.chips);
+
+      if (area.isStateValid()) {
+        moves.push(area);
+      }
     });
 
-    currentFloorChips.map(el => {
-      let newArea = this.clone();
-      newArea.floors[currentFloorIndex].removeChips(el);
-      newArea.floors[targetFloorIndex].addChips(el);
-      newArea.elevator = targetFloorIndex;
-      moves.push(newArea);
-    });
-
-    return moves.filter(el => el.isStateValid());
+    return moves;
   }
 }
 

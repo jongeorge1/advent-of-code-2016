@@ -4,23 +4,23 @@ describe('day 11 floor module', () => {
   let sut;
 
   describe('when created', () => {
-    // describe('with generators and chips', () => {
-    //   beforeEach(() => {
-    //     sut = new Floor(2, 'The second floor contains a thulium generator, a ruthenium generator, a ruthenium-compatible microchip, a curium generator, and a curium-compatible microchip.')
-    //   });
+    describe('with generators and chips', () => {
+      beforeEach(() => {
+        sut = new Floor(2, 'The second floor contains a thulium generator, a ruthenium generator, a ruthenium-compatible microchip, a curium generator, and a curium-compatible microchip.')
+      });
 
-    //   it('should parse the floor number correctly', () => {
-    //     expect(sut.level).toBe(2);
-    //   });
+      it('should parse the floor number correctly', () => {
+        expect(sut.level).toBe(2);
+      });
 
-    //   it('should parse the generators correctly', () => {
-    //     expect(sut.generators).toEqual(['thulium', 'ruthenium', 'curium']);
-    //   });
+      it('should parse the generators correctly', () => {
+        expect(sut.generators).toEqual(['thulium', 'ruthenium', 'curium']);
+      });
 
-    //   it('should parse the chips correctly', () => {
-    //     expect(sut.chips).toEqual(['ruthenium', 'curium']);
-    //   });
-    // });
+      it('should parse the chips correctly', () => {
+        expect(sut.chips).toEqual(['ruthenium', 'curium']);
+      });
+    });
 
     describe('with only chips', () => {
       beforeEach(() => {
@@ -112,6 +112,16 @@ describe('day 11 floor module', () => {
           });
         });
       });
+    });
+  });
+
+  describe('when asked for all movable combinations', () => {
+    it('should return an array containing all possible combinations of 1 and 2 chips and generators', () => {
+      sut = new Floor(1);
+      sut.addGenerators('b', 'a');
+      sut.addChips('b', 'a');
+      let result = sut.getAllMovableCombinations();
+      expect(result.length).toBe(10);
     });
   });
 });
